@@ -29,7 +29,7 @@ dfDays <- df %>%
     summarise(total_steps = sum(steps))
 
 # plot a histogram of total number of steps per day
-qplot(dfDays$total_steps, geom="histogram")
+qplot(dfDays$total_steps, xlab="steps", main="Steps per day", geom="histogram")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
@@ -62,7 +62,10 @@ dfInterval <- df %>%
     summarise(total_steps = sum(steps))
 
 # time plot of total number of steps per interval
-qplot(interval, total_steps, data=dfInterval, geom="line")
+qplot(
+    interval, total_steps, data=dfInterval,
+    main="Steps per interval", ylab="steps", geom="line"
+)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
@@ -102,7 +105,10 @@ dfDaysNoNA <- dfNoNA %>%
   summarise(total_steps = sum(steps))
 
 # plot a histogram of total number of steps per day
-qplot(dfDaysNoNA$total_steps, geom="histogram")
+qplot(
+    dfDaysNoNA$total_steps, main="Steps per day",
+    xlab="steps", geom="histogram"
+)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
@@ -133,11 +139,14 @@ dfNoNA <- dfNoNA %>%
 
 # group by interval
 dfIntervalNoNA <- dfNoNA %>%
-  group_by(interval, dayType) %>%
-  summarise(total_steps = sum(steps))
+    group_by(interval, dayType) %>%
+    summarise(total_steps = sum(steps))
 
 # time plot of total number of steps per interval
-qplot(interval, total_steps, data=dfIntervalNoNA, facets = .~dayType, geom="line")
+qplot(
+    interval, total_steps, data=dfIntervalNoNA, main="Steps per interval",
+    ylab="steps", facets = .~dayType, geom="line"
+)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 

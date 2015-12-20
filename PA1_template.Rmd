@@ -35,7 +35,7 @@ dfDays <- df %>%
     summarise(total_steps = sum(steps))
 
 # plot a histogram of total number of steps per day
-qplot(dfDays$total_steps, geom="histogram")
+qplot(dfDays$total_steps, xlab="steps", main="Steps per day", geom="histogram")
 
 # calculate mean and median of total number of steps per day
 mean(dfDays$total_steps)
@@ -52,7 +52,10 @@ dfInterval <- df %>%
     summarise(total_steps = sum(steps))
 
 # time plot of total number of steps per interval
-qplot(interval, total_steps, data=dfInterval, geom="line")
+qplot(
+    interval, total_steps, data=dfInterval,
+    main="Steps per interval", ylab="steps", geom="line"
+)
 
 # max interval
 dfInterval[which.max(dfInterval$total_steps),]
@@ -79,7 +82,10 @@ dfDaysNoNA <- dfNoNA %>%
   summarise(total_steps = sum(steps))
 
 # plot a histogram of total number of steps per day
-qplot(dfDaysNoNA$total_steps, geom="histogram")
+qplot(
+    dfDaysNoNA$total_steps, main="Steps per day",
+    xlab="steps", geom="histogram"
+)
 
 # calculate mean and median of total number of steps per day
 mean(dfDaysNoNA$total_steps)
@@ -94,9 +100,12 @@ dfNoNA <- dfNoNA %>%
 
 # group by interval
 dfIntervalNoNA <- dfNoNA %>%
-  group_by(interval, dayType) %>%
-  summarise(total_steps = sum(steps))
+    group_by(interval, dayType) %>%
+    summarise(total_steps = sum(steps))
 
 # time plot of total number of steps per interval
-qplot(interval, total_steps, data=dfIntervalNoNA, facets = .~dayType, geom="line")
+qplot(
+    interval, total_steps, data=dfIntervalNoNA, main="Steps per interval",
+    ylab="steps", facets = .~dayType, geom="line"
+)
 ```
