@@ -1,17 +1,10 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Loading and preprocessing the data
-```{r setoptions, echo=FALSE}
-library(knitr)
-opts_chunk$set(echo=T, warning=F, message=F)
-```
 
-```{r}
+
+
+```r
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -27,7 +20,8 @@ df <- df %>%
 ```
 
 ## What is mean total number of steps taken per day?
-```{r}
+
+```r
 # group steps by days
 dfDays <- df %>%
     na.omit() %>%
@@ -36,15 +30,31 @@ dfDays <- df %>%
 
 # plot a histogram of total number of steps per day
 qplot(dfDays$total_steps, geom="histogram")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
+```r
 # calculate mean and median of total number of steps per day
 mean(dfDays$total_steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(dfDays$total_steps)
+```
+
+```
+## [1] 10765
 ```
 
 
 ## What is the average daily activity pattern
-```{r}
+
+```r
 # group by interval
 dfInterval <- df %>%
     na.omit() %>%
@@ -53,13 +63,26 @@ dfInterval <- df %>%
 
 # time plot of total number of steps per interval
 qplot(interval, total_steps, data=dfInterval, geom="line")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
+```r
 # max interval
 dfInterval[which.max(dfInterval$total_steps),]
 ```
 
+```
+## Source: local data frame [1 x 2]
+## 
+##   interval total_steps
+##      (int)       (int)
+## 1      835       10927
+```
+
 ## Imputing missing values
-```{r}
+
+```r
 # number of missing values
 numMissingValues <- sum(is.na(df$steps))
 
@@ -80,14 +103,30 @@ dfDaysNoNA <- dfNoNA %>%
 
 # plot a histogram of total number of steps per day
 qplot(dfDaysNoNA$total_steps, geom="histogram")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+```r
 # calculate mean and median of total number of steps per day
 mean(dfDaysNoNA$total_steps)
+```
+
+```
+## [1] 10581.01
+```
+
+```r
 median(dfDaysNoNA$total_steps)
 ```
 
+```
+## [1] 10395
+```
+
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
+
+```r
 # calculate if date is a weekday
 dfNoNA <- dfNoNA %>%
     mutate(dayType = as.factor(ifelse(wday(dfNoNA$dateTime, label=T) %in% c("Sat", "Sun"), "weekday", "weekend")))
@@ -100,3 +139,5 @@ dfIntervalNoNA <- dfNoNA %>%
 # time plot of total number of steps per interval
 qplot(interval, total_steps, data=dfIntervalNoNA, facets = .~dayType, geom="line")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
